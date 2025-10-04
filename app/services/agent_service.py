@@ -2,9 +2,10 @@ from langchain_community.tools import WikipediaQueryRun, ArxivQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper, ArxivAPIWrapper
 from langchain import hub
 from langchain.agents import create_openai_tools_agent, AgentExecutor
-from app.services.llm_service import get_llm, get_embeddings  
+from app.services.llm_service import get_openai_llm, get_embeddings
 from app.services.vector_store_service import get_retriever
 from langchain.tools.retriever import create_retriever_tool
+from app.config.settings import settings
 from typing import Dict, Any
 
 def create_agent(session_id: str) -> AgentExecutor:
@@ -22,7 +23,7 @@ def create_agent(session_id: str) -> AgentExecutor:
     
     tools = [wiki_tool, arxiv_tool, retriever_tool]
     
-    llm = get_llm("gpt-3.5-turbo")  # Use OpenAI for agent
+    llm = get_openai_llm()
     prompt = hub.pull("hwchase17/openai-functions-agent")
     agent = create_openai_tools_agent(llm, tools, prompt)
     return AgentExecutor(agent=agent, tools=tools, verbose=True)
