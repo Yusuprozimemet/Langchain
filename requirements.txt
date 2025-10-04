@@ -13,5 +13,5 @@ faiss-cpu==1.8.0
 python-multipart==0.0.9
 arxiv==2.1.3
 wikipedia==1.4.0
-pypdf
+ pypdf2==3.0.1
 streamlit==1.38.0
